@@ -1,11 +1,13 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Template Repository Usage Action'
+description: 'A GitHub action to automatically update a template repository README with a list of repos that used it in an organisation.'
+author: 'Matthew Elphick'
 inputs:
-  milliseconds: # change this
+  token:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'A personal access token that can access your organisation repos, see https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token for more.'
 runs:
   using: 'node12'
   main: 'dist/index.js'
+branding:
+  color: 'gray-dark'
+  icon: 'git-branch'

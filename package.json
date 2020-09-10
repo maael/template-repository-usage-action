@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
+  "name": "template-repository-usage-action",
+  "version": "1.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "A GitHub action to automatically update a template repository README with a list of repos that used it in an organisation.",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -15,17 +15,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/maael/template-repository-usage-action.git"
   },
   "keywords": [
     "actions",
     "node",
     "setup"
   ],
-  "author": "",
+  "author": "Matthew Elphick <matt.a.elphy@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.5"
+    "@actions/core": "^1.2.5",
+    "@actions/github": "^4.0.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.10",

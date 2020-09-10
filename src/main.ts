@@ -1,16 +1,31 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import github from '@actions/github'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+    const token: string = core.getInput('token')
+    const octokit = github.getOctokit(token)
+    const {repo} = github.context
+    const org = repo.owner
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    const {data} = await octokit.repos.listForOrg({
+      org
+    })
 
-    core.setOutput('time', new Date().toTimeString())
+    const reposProducedByThis = data
+      .filter(
+        d =>
+          d.template_repository.name === repo.repo &&
+          d.template_repository.owner === org
+      )
+      .map(d => `[${d.html_url}](${d.full_name})`)
+      .join('\n* ')
+
+    const output = `# Repositories using this template\n\n${
+      reposProducedByThis.length ? '' : `* ${reposProducedByThis}`
+    }`
+
+    core.info(output)
   } catch (error) {
     core.setFailed(error.message)
   }
