@@ -1,6 +1,8 @@
 import {promises as fs} from 'fs'
+import path from 'path'
 import * as core from '@actions/core'
 import * as github from '@actions/github'
+import simpleGit from 'simple-git/promise'
 
 interface Response {
   organization: {
@@ -27,7 +29,14 @@ interface Item {
 
 async function run(): Promise<void> {
   try {
-    const readmePath = core.getInput('readmePath') || 'README.md'
+    const authorEmail =
+      core.getInput('author_email') || 'matt.a.elphy@gmail.com'
+    const authorName = core.getInput('author_name') || 'Matthew Elphick'
+    const baseDir = path.join(process.cwd(), core.getInput('cwd') || '')
+    const readmePath = path.join(
+      baseDir,
+      core.getInput('readmePath') || 'README.md'
+    )
     const readmeContent = await fs.readFile(readmePath, {
       encoding: 'utf-8'
     })
@@ -80,7 +89,9 @@ async function run(): Promise<void> {
       items = items.concat(result.organization.repositories.nodes)
     } while (nextPageCursor !== undefined)
 
-    core.info(`${items.length} items`)
+    core.info(
+      `Checking ${items.length} organization repositories for repositores from ${repoName}`
+    )
 
     const reposProducedByThis = items
       .filter(
@@ -97,20 +108,25 @@ async function run(): Promise<void> {
       reposProducedByThis.length ? `* ${reposProducedByThis.join('\n* ')}` : ''
     }`
 
-    core.info(
-      readmeContent.replace(
-        /<!-- TEMPLATE_LIST_START -->[\s\S]+<!-- TEMPLATE_LIST_END -->/,
-        `<!-- TEMPLATE_LIST_START -->\n${output}\n<!-- TEMPLATE_LIST_END -->`
-      )
+    const updatedReadme = readmeContent.replace(
+      /<!-- TEMPLATE_LIST_START -->[\s\S]+<!-- TEMPLATE_LIST_END -->/,
+      `<!-- TEMPLATE_LIST_START -->\n${output}\n<!-- TEMPLATE_LIST_END -->`
     )
 
-    await fs.writeFile(
-      readmePath,
-      readmeContent.replace(
-        /<!-- TEMPLATE_LIST_START -->[\s\S]+<!-- TEMPLATE_LIST_END -->/,
-        `<!-- TEMPLATE_LIST_START -->\n${output}\n<!-- TEMPLATE_LIST_END -->`
-      )
-    )
+    await fs.writeFile(readmePath, updatedReadme)
+
+    if (readmeContent !== updatedReadme) {
+      core.info('Changes found, committing')
+      const git = simpleGit(baseDir)
+      await git.addConfig('user.email', authorEmail)
+      await git.addConfig('user.name', authorName)
+      await git.add(readmePath)
+      await git.commit(`docs: 📝 Updating template usage list`, undefined, {
+        '--author': `"${authorName} <${authorEmail}>"`
+      })
+      await git.push()
+      core.info('Committed')
+    }
   } catch (error) {
     core.setFailed(error.message)
   }
