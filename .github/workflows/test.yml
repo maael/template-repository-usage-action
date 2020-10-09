@@ -22,3 +22,7 @@ jobs:
       - uses: ./
         with:
           token: ${{ secrets.GH_TOKEN }}
+          org: 'ThreadsStyling'
+          repo: 'graphql-monorepo-template'
+      - run: |
+          cat README.md

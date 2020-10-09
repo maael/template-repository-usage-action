@@ -5,6 +5,15 @@ inputs:
   token:
     required: true
     description: 'A personal access token that can access your organisation repos, see https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token for more.'
+  org:
+    required: false
+    description: 'A way to override the organisation the action is checking for usage of the template'
+  repo:
+    required: false
+    description: 'A way to override the repo the action is checking for usage of in the given org'
+  readmePath:
+    required: false
+    description: 'The path to the README to update'
 runs:
   using: 'node12'
   main: 'dist/index.js'
