@@ -90,7 +90,7 @@ async function run(): Promise<void> {
     } while (nextPageCursor !== undefined)
 
     core.info(
-      `Checking ${items.length} organization repositories for repositores from ${repoName}`
+      `Checking ${items.length} organization repositories for repositories from ${repoName}`
     )
 
     const reposProducedByThis = items
@@ -100,11 +100,11 @@ async function run(): Promise<void> {
           d.templateRepository.name === repoName &&
           d.templateRepository.owner.login === org
       )
-      .map(d => `[${d.url}](${d.nameWithOwner})`)
+      .map(d => `[${d.nameWithOwner}](${d.url})`)
 
     const output = `# ${reposProducedByThis.length} Repositories using ${
-      repoName === repo.repo ? '' : `${repoName} `
-    }template\n\n${
+      repoName === repo.repo ? 'template' : `${repoName}`
+    }\n\n${
       reposProducedByThis.length ? `* ${reposProducedByThis.join('\n* ')}` : ''
     }`
 
@@ -126,6 +126,8 @@ async function run(): Promise<void> {
       })
       await git.push()
       core.info('Committed')
+    } else {
+      core.info('No changes, skipping')
     }
   } catch (error) {
     core.setFailed(error.message)

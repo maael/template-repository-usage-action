@@ -95,13 +95,13 @@ function run() {
                     : undefined;
                 items = items.concat(result.organization.repositories.nodes);
             } while (nextPageCursor !== undefined);
-            core.info(`Checking ${items.length} organization repositories for repositores from ${repoName}`);
+            core.info(`Checking ${items.length} organization repositories for repositories from ${repoName}`);
             const reposProducedByThis = items
                 .filter(d => d.templateRepository &&
                 d.templateRepository.name === repoName &&
                 d.templateRepository.owner.login === org)
-                .map(d => `[${d.url}](${d.nameWithOwner})`);
-            const output = `# ${reposProducedByThis.length} Repositories using ${repoName === repo.repo ? '' : `${repoName} `}template\n\n${reposProducedByThis.length ? `* ${reposProducedByThis.join('\n* ')}` : ''}`;
+                .map(d => `[${d.nameWithOwner}](${d.url})`);
+            const output = `# ${reposProducedByThis.length} Repositories using ${repoName === repo.repo ? 'template' : `${repoName}`}\n\n${reposProducedByThis.length ? `* ${reposProducedByThis.join('\n* ')}` : ''}`;
             const updatedReadme = readmeContent.replace(/<!-- TEMPLATE_LIST_START -->[\s\S]+<!-- TEMPLATE_LIST_END -->/, `<!-- TEMPLATE_LIST_START -->\n${output}\n<!-- TEMPLATE_LIST_END -->`);
             yield fs_1.promises.writeFile(readmePath, updatedReadme);
             if (readmeContent !== updatedReadme) {
@@ -115,6 +115,9 @@ function run() {
                 });
                 yield git.push();
                 core.info('Committed');
+            }
+            else {
+                core.info('No changes, skipping');
             }
         }
         catch (error) {
