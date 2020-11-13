@@ -96,11 +96,11 @@ After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/
 <!-- TEMPLATE_LIST_START -->
 # 7 Repositories using graphql-monorepo-template
 
-* [ThreadsStyling/product-catalogue-api](https://github.com/ThreadsStyling/product-catalogue-api)
-* [ThreadsStyling/graphql.threads.team](https://github.com/ThreadsStyling/graphql.threads.team)
 * [ThreadsStyling/sales-ops-api](https://github.com/ThreadsStyling/sales-ops-api)
-* [ThreadsStyling/parcels-graph-api](https://github.com/ThreadsStyling/parcels-graph-api)
 * [ThreadsStyling/inbound-link-resolver](https://github.com/ThreadsStyling/inbound-link-resolver)
-* [ThreadsStyling/chat-assignment-api](https://github.com/ThreadsStyling/chat-assignment-api)
 * [ThreadsStyling/notifications-service](https://github.com/ThreadsStyling/notifications-service)
+* [ThreadsStyling/chat-assignment-api](https://github.com/ThreadsStyling/chat-assignment-api)
+* [ThreadsStyling/graphql.threads.team](https://github.com/ThreadsStyling/graphql.threads.team)
+* [ThreadsStyling/product-catalogue-api](https://github.com/ThreadsStyling/product-catalogue-api)
+* [ThreadsStyling/parcels-graph-api](https://github.com/ThreadsStyling/parcels-graph-api)
 <!-- TEMPLATE_LIST_END -->
