@@ -96,8 +96,8 @@ After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/
 <!-- TEMPLATE_LIST_START -->
 # 7 Repositories using graphql-monorepo-template
 
-* [ThreadsStyling/graphql.threads.team](https://github.com/ThreadsStyling/graphql.threads.team)
 * [ThreadsStyling/sales-ops-api](https://github.com/ThreadsStyling/sales-ops-api)
+* [ThreadsStyling/graphql.threads.team](https://github.com/ThreadsStyling/graphql.threads.team)
 * [ThreadsStyling/product-catalogue-api](https://github.com/ThreadsStyling/product-catalogue-api)
 * [ThreadsStyling/inbound-link-resolver](https://github.com/ThreadsStyling/inbound-link-resolver)
 * [ThreadsStyling/notifications-service](https://github.com/ThreadsStyling/notifications-service)
