@@ -5,7 +5,7 @@ import * as github from '@actions/github'
 import simpleGit from 'simple-git/promise'
 
 interface Response {
-  organization: {
+  repositoryOwner: {
     repositories: {
       pageInfo: {
         hasNextPage: boolean
@@ -56,8 +56,8 @@ async function run(): Promise<void> {
       const result: Response = await octokit.graphql(
         `
         query orgRepos($owner: String!, $afterCursor: String) {
-          organization(login: $owner) {
-            repositories(first: 100, after:$afterCursor, orderBy:{field:PUSHED_AT, direction:DESC}) {
+          repositoryOwner(login: $owner) {
+            repositories(first: 100, after:$afterCursor, orderBy:{field:CREATED_AT, direction:DESC}) {
               pageInfo {
                 hasNextPage
                 endCursor
@@ -82,15 +82,15 @@ async function run(): Promise<void> {
           afterCursor: nextPageCursor
         }
       )
-      nextPageCursor = result.organization.repositories.pageInfo.hasNextPage
-        ? result.organization.repositories.pageInfo.endCursor
+      nextPageCursor = result.repositoryOwner.repositories.pageInfo.hasNextPage
+        ? result.repositoryOwner.repositories.pageInfo.endCursor
         : undefined
 
-      items = items.concat(result.organization.repositories.nodes)
+      items = items.concat(result.repositoryOwner.repositories.nodes)
     } while (nextPageCursor !== undefined)
 
     core.info(
-      `Checking ${items.length} organization repositories for repositories from ${repoName}`
+      `Checking ${items.length} repositories for repositories from ${repoName}`
     )
 
     const reposProducedByThis = items
