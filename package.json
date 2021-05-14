@@ -28,7 +28,7 @@
   "dependencies": {
     "@actions/core": "^1.2.7",
     "@actions/github": "^4.0.0",
-    "simple-git": "^2.38.1"
+    "simple-git": "^2.39.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
