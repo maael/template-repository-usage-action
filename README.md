@@ -94,8 +94,9 @@ After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/
 ## Example:
 
 <!-- TEMPLATE_LIST_START -->
-# 7 Repositories using graphql-monorepo-template
+# 8 Repositories using graphql-monorepo-template
 
+* [ThreadsStyling/microservices](https://github.com/ThreadsStyling/microservices)
 * [ThreadsStyling/parcels-graph-api](https://github.com/ThreadsStyling/parcels-graph-api)
 * [ThreadsStyling/notifications-service](https://github.com/ThreadsStyling/notifications-service)
 * [ThreadsStyling/inbound-link-resolver](https://github.com/ThreadsStyling/inbound-link-resolver)
