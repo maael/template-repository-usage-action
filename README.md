@@ -21,15 +21,16 @@ Removing the `EXAMPLE_` prefix, done here so the example below doesn't match the
 
 ### Options
 
-| Option         | Required | Description                                                                                                                                                                        |
-| -------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `token`        | ✅       | A personal access token that can access your organisation repos, see [here](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) for more. |
-| `org`          | ❌       | A way to override the organisation the action is checking for usage of the template, otherwise it uses the org that owns the repo where the action is running.                     |
-| `repo`         | ❌       | A way to override the repo the action is checking for usage of in the given org, otherwise it uses the repo where the action is running.                                           |
-| `readme_path`  | ❌       | The path to the README to update.                                                                                                                                                  |
-| `author_name`  | ❌       | The name of the user that will be displayed as the author of the commit.                                                                                                           |
-| `author_email` | ❌       | The email of the user that will be displayed as the author of the commit.                                                                                                          |
-| `cwd`          | ❌       | The directory where your repository is located. You should use actions/checkout first to set it up.                                                                                |
+| Option          | Required | Description                                                                                                                                                                        |
+| --------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `token`         | ✅        | A personal access token that can access your organisation repos, see [here](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) for more. |
+| `org`           | ❌        | A way to override the organisation the action is checking for usage of the template, otherwise it uses the org that owns the repo where the action is running.                     |
+| `repo`          | ❌        | A way to override the repo the action is checking for usage of in the given org, otherwise it uses the repo where the action is running.                                           |
+| `readme_path`   | ❌        | The path to the README to update.                                                                                                                                                  |
+| `heading_level` | ❌        | The heading level for the usage section in the README file. (default: 1)                                                                                                           |
+| `author_name`   | ❌        | The name of the user that will be displayed as the author of the commit.                                                                                                           |
+| `author_email`  | ❌        | The email of the user that will be displayed as the author of the commit.                                                                                                          |
+| `cwd`           | ❌        | The directory where your repository is located. You should use actions/checkout first to set it up.                                                                                |
 
 ## Code in Main
 
