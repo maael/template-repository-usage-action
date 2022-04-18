@@ -22,6 +22,6 @@ jobs:
       - uses: ./
         with:
           token: ${{ secrets.GH_TOKEN }}
-          org: 'ThreadsStyling'
-          repo: 'graphql-monorepo-template'
+          org: 'maael'
+          repo: 'next-template'
           heading_level: 2
