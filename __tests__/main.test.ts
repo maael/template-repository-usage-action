@@ -1,15 +1,51 @@
-// import * as process from 'process'
-// import * as cp from 'child_process'
-// import * as path from 'path'
+import * as process from 'process'
+import * as cp from 'child_process'
+import * as path from 'path'
+import {promises as fs} from 'fs'
+import {rest} from 'msw'
+import {setupServer} from 'msw/node'
 
-// // shows how the runner will run a javascript action with env / stdout protocol
-// test('test runs', () => {
-//   process.env['INPUT_TOKEN'] = 'what'
-//   const ip = path.join(__dirname, '..', 'lib', 'main.js')
-//   const options: cp.ExecSyncOptions = {
-//     env: process.env
-//   }
-//   console.log(cp.execSync(`node ${ip}`, options).toString())
-// })
+const worker = setupServer(
+  rest.get('https://github.com/octocat', (req, res, ctx) => {
+    return res(
+      ctx.delay(1500),
+      ctx.status(202, 'Mocked status'),
+      ctx.json({
+        message: 'Mocked response JSON body'
+      })
+    )
+  })
+)
 
-test.todo('test')
+beforeAll(() => {
+  worker.listen({
+    onUnhandledRequest(req) {
+      console.error(
+        'Found an unhandled %s request to %s',
+        req.method,
+        req.url.href
+      )
+    }
+  })
+})
+
+afterAll(() => {
+  worker.close()
+})
+
+test('should do the thing', async () => {
+  process.env['INPUT_TOKEN'] = 'test-token'
+  process.env['INPUT_ORG'] = 'maael'
+  process.env['INPUT_REPO'] = 'doesnt-exist'
+  const actionPath = path.join(__dirname, '..', 'lib', 'main.js')
+  const options: cp.ExecSyncOptions = {
+    env: process.env
+  }
+  const r = await fs.stat(actionPath)
+  const child = cp.spawnSync(`node ${actionPath}`, options)
+  if (child.error) {
+    console.error(child.error)
+  } else {
+    console.info('Done', child.stdout)
+  }
+})
