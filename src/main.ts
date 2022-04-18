@@ -35,11 +35,13 @@ async function run(): Promise<void> {
     const baseDir = path.join(process.cwd(), core.getInput('cwd') || '')
     const readmePath = path.join(
       baseDir,
-      core.getInput('readmePath') || 'README.md'
+      core.getInput('readme_path') || 'README.md'
     )
     const readmeContent = await fs.readFile(readmePath, {
       encoding: 'utf-8'
     })
+    const headingLevel: number = +core.getInput('heading_level') || 1
+    const headingLevelContent = '#'.repeat(headingLevel)
 
     const token: string = core.getInput('token')
     const octokit = github.getOctokit(token, {
@@ -102,7 +104,9 @@ async function run(): Promise<void> {
       )
       .map(d => `[${d.nameWithOwner}](${d.url})`)
 
-    const output = `# ${reposProducedByThis.length} Repositories using ${
+    const output = `${headingLevelContent} ${
+      reposProducedByThis.length
+    } Repositories using ${
       repoName === repo.repo ? 'template' : `${repoName}`
     }\n\n${
       reposProducedByThis.length ? `* ${reposProducedByThis.join('\n* ')}` : ''

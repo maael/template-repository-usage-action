@@ -24,3 +24,4 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
           org: 'ThreadsStyling'
           repo: 'graphql-monorepo-template'
+          heading_level: 2
