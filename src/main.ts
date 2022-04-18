@@ -40,7 +40,8 @@ async function run(): Promise<void> {
     const readmeContent = await fs.readFile(readmePath, {
       encoding: 'utf-8'
     })
-    const headingLevel: number = +core.getInput('heading_level') || 1
+    const headingLevel: number =
+      parseInt(core.getInput('heading_level'), 10) || 1
     const headingLevelContent = '#'.repeat(headingLevel)
 
     const token: string = core.getInput('token')
